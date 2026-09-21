@@ -19,7 +19,7 @@ TOKEN = os.getenv("DISCORD_TOKEN", "").strip()
 CHANNEL_ID = int(os.getenv("NEWS_CHANNEL_ID", "1550746194219765873"))
 INTERVAL = int(os.getenv("CHECK_INTERVAL_SECONDS", "180"))
 ACCOUNTS = ["Roblox", "Bloxy_News"]
-FEED_URL = "https://rss-bridge.org/bridge01/?action=display&bridge=Twitter&format=Atom&u={}"
+FEED_URL = "https://fxtwitter.com/{}/feed.xml"
 DB = Path("news.db")
 
 client = discord.Client(intents=discord.Intents.default())
@@ -126,7 +126,7 @@ def parse_feed(xml, username):
 async def fetch(username):
     async with http.get(FEED_URL.format(username), headers={"User-Agent":"SPLAH-Roblox-News-Bot/2.0"}, timeout=25) as r:
         body = await r.text()
-        if r.status != 200: raise RuntimeError(f"RSS Bridge HTTP {r.status}")
+        if r.status != 200: raise RuntimeError(f"X feed HTTP {r.status}")
         return parse_feed(body, username)
 
 def icon(s):
